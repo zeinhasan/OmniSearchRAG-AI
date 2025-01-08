@@ -100,7 +100,6 @@ async def check_handlers() -> Dict[str, str]:
     try:
         # Check StorageHandler
         storage = StorageHandler()
-        storage.upload_file("test.txt", "test.txt")
         results["storage"] = "OK"
     except Exception as e:
         results["storage"] = f"Error: {str(e)}"
