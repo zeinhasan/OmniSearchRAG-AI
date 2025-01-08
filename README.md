@@ -1,8 +1,6 @@
 # OmniSearchRAG-AI
 OmniSearchRAG AI: Unified Knowledge Retrieval with Multi-Model Integration (GEMINI, Deepseek), FAISS Vector Database, and Open Web Search
 
-# OmniSearchRAG-AI
-
 **Unified Knowledge Retrieval with Multi-Model Integration**
 
 OmniSearchRAG-AI is a powerful project designed to provide seamless knowledge retrieval across multiple data sources, including structured databases, unstructured documents, and open web content. By integrating state-of-the-art language models (GEMINI and Deepseek), a FAISS vector database, and Google Custom Search, this project offers a robust solution for intelligent search and data analysis.
@@ -69,7 +67,7 @@ OmniSearchRAG-AI is a powerful project designed to provide seamless knowledge re
 1. **Clone the Repository**:
    ```bash
    git clone https://github.com/zeinhasan/OmniSearchRAG-AI
-   cd OmniSearch-AI
+   cd OmniSearchRAG-AI
 2. Set Up a Virtual Environment (Optional but Recommended):
     ```bash
     python -m venv venv
@@ -253,7 +251,7 @@ The API is configured to allow cross-origin requests from all domains (`*`). Thi
 ## Repository Structure
 
 ```
-OmniSearch-AI/
+OmniSearchRAG-AI/
 │
 ├── main.py                   # FastAPI application entry point
 ├── models/
