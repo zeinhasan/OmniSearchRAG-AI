@@ -1,4 +1,4 @@
-from datetime import datetime  # Import datetime for timestamp
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from models.model_handler import ModelHandler
@@ -37,8 +37,11 @@ async def query(request: QueryRequest):
         if request.gcs_file_names:
             external_context = source.get_external_context(request.query, request.gcs_file_names)
 
-        # Combine query and external context
-        full_prompt = f"{request.query}\n\nContext:\n{external_context}" if external_context else request.query
+        # Combine query, context, and external context
+        if request.context or external_context:
+            full_prompt = f"{request.query}\n\nContext:\n{request.context}\n{external_context}"
+        else:
+            full_prompt = request.query
 
         # Generate response using the model
         response = model.generate_response(full_prompt, history)
@@ -51,7 +54,10 @@ async def query(request: QueryRequest):
             "user_id": request.user_id,  # Include the user_id in the response
             "response_status": "success",  # Indicate the status of the response   
             "timestamp": datetime.now().isoformat(),  # Add current timestamp
-            "response": response,
+            "response": {
+                "answer": response["answer"],
+                "context_used": full_prompt
+            },
         }
 
         return response_data

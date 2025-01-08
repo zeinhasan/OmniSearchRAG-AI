@@ -12,7 +12,7 @@ class QueryRequest(BaseModel):
     user_id: str  # User ID for history tracking
     max_history: Optional[int] = 20  # Maximum history entries to retrieve
     gcs_file_names: Optional[List[str]] = None  # List of file names in GCS for external context
-
+    context: str = ""
 class ExternalSourceRequest(BaseModel):
     """
     Request model for the /external-source endpoint.

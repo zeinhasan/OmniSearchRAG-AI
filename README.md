@@ -131,7 +131,8 @@ This endpoint processes user queries, integrates external context (if provided),
     "model_name": "string",  // Name of the model to use (e.g., "gemini", "deepseek")
     "storage_type": "string",  // Type of database to use (e.g., "mysql", "bigquery")
     "max_history": 10,  // Maximum number of historical interactions to retrieve
-    "gcs_file_names": ["file1.txt", "file2.pdf"]  // Optional: List of GCS file names for external context
+    "gcs_file_names": ["file1.txt", "file2.pdf"],  // Optional: List of GCS file names for external context
+    "context": "string" // Optional: External Context
   }
   ```
 
@@ -141,32 +142,39 @@ This endpoint processes user queries, integrates external context (if provided),
     "user_id": "string",  // User ID provided in the request
     "response_status": "success",  // Status of the response
     "timestamp": "2023-10-01T12:34:56.789Z",  // Timestamp of the response
-    "response": "string"  // Generated response from the model
+    "response": {
+        "answer": "string",
+        "context_used": "string"
+    } // Generated response from the model
   }
   ```
 
 - **Example Request**:
   ```bash
   curl -X POST "http://127.0.0.1:5001/query" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "user_id": "12345",
-    "query": "What is machine learning?",
-    "model_name": "gemini",
-    "storage_type": "mysql",
-    "max_history": 5,
-    "gcs_file_names": ["ml_guide.pdf"]
-  }'
+    -H "Content-Type: application/json" \
+    -d '{
+        "user_id": "12345",
+        "query": "What is machine learning?",
+        "model_name": "gemini",
+        "storage_type": "mysql",
+        "max_history": 5,
+        "gcs_file_names": ["ml_guide.pdf"],
+        "context": "From previous conversation, we discussed the basics of AI."
+    }'
   ```
 
 - **Example Response**:
   ```json
-  {
-    "user_id": "12345",
-    "response_status": "success",
-    "timestamp": "2023-10-01T12:34:56.789Z",
-    "response": "Machine learning is a subset of artificial intelligence that focuses on building systems that can learn from data."
-  }
+    {
+        "user_id": "12345",
+        "response_status": "success",
+        "timestamp": "2023-10-05T12:00:00.000Z",
+        "response": {
+            "answer": "Machine learning is a subset of AI that focuses on building systems that can learn from data.",
+            "context_used": "What is machine learning?\n\nContext:\nFrom previous conversation, we discussed the basics of AI.\nContent from ml_guide.pdf"
+        }
+    }
   ```
 
 ---
